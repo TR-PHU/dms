@@ -1,8 +1,8 @@
 "use strict";
 
-var { Driver } = require(`${process.env.PATH_TO_NODE_NUODB}`);
+const { Driver } = require(`${process.env.PATH_TO_NODE_NUODB}`);
 
-var config = {
+const config = {
   database: "test",
   hostname: "localhost",
   port: 48004,
@@ -10,24 +10,26 @@ var config = {
   password: "dba",
 };
 
-var driver = new Driver();
+const driver = new Driver();
+var connection;
 
-driver.connect(config, function (err, connection) {
-  if (err) {
-    console.log(err);
+(async () => {
+  connection = await driver.connect(config);
+  try {
+    if (!connection) {
+      throw new Error("Connection failed");
+    }
+
+    console.log("Connected to NuoDB successfully");
+  } catch (e) {
+    await connection.rollback();
+    throw e;
+  } finally {
+    await connection.close();
   }
-  if (connection)
-    connection.execute("SELECT * FROM HOCKEY.PLAYERS", function (err, result) {
-      result
-        .getRows()
-        .then((r) => console.log(r))
-        .catch((err) => console.log(err));
-    });
-  else {
-    console.log("aaaa");
-  }
-});
+})().catch((e) => console.log(e.stack));
 
 module.exports = {
   driver,
+  config,
 };
