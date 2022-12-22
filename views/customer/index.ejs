@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body class="h-100">
+  <div class="main-content h-100">
+    <div class="container mt-5">
+      <div class="d-flex align-items-center">
+        <div class="title mr-auto">
+          <h1><%= title %></h1>
+        </div>
+        <div class="d-flex align-items-center">
+          Welcome: <%= user.USERNAME %>
+
+          <form action="/logout" method="POST">
+            <button type="submit" class="btn btn-link">Logout</button>
+          </form>
+        </div>
+      </div>
+      <hr>
+
+      <div class="content-body">
+        <div class="add-customer">
+          <form action="/customer" method="POST">
+            <div class="title">
+              <h2>Add new customer</h2>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Name</span>
+              </div>
+              <input name="name" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Gender</span>
+              </div>
+              <input name="gender" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Date of birth</span>
+              </div>
+                <input name="dateOfBirth" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Phone</span>
+              </div>
+              <input name="phone" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Address</span>
+              </div>
+              <input name="address" type="text" class="form-control">
+            </div>
+
+
+            <button type="submit" class="btn btn-primary mt-3">Add customer</button>
+          </form>
+        </div>
+        <hr class="mt-5 mb-5">
+
+        <div class="list-customers">
+            <div class="title">
+              <h2>List customers</h2>
+            </div>
+            <div class="table-responsive"> 
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" colspan="2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% customers.forEach(function(customer){ %>
+                    <tr>
+                      <th scope="row"><%= customer.ID %></th>
+                      <td scope="row"><%= customer.NAME %></td>
+                      <td scope="row"><%= customer.GENDER %></td>
+                      <td scope="row"><%= customer.DOB %></td>
+                      <td scope="row"><%= customer.PHONE %></td>
+                      <td scope="row"><%= customer.ADDRESS %></td>
+                      <td scope="row">
+                        <div class="btn btn-info">
+                          <a href="<%= customer.updateLink %>">
+                            <span class="text-white font-weight-bold">Update</span>
+                          </a>
+                        </div>
+                      </td>
+                      <td scope="row">
+                        <div class="btn btn-danger">
+                          <a href="<%= customer.deleteLink %>">
+                            <span class="text-white font-weight-bold">Delete</span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </divclas>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
