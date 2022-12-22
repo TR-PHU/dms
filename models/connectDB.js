@@ -8,6 +8,7 @@ const config = {
   port: 48004,
   user: "dba",
   password: "dba",
+  schema: process.env.NUODB_SCHEMA
 };
 
 const driver = new Driver();
@@ -31,5 +32,5 @@ var connection;
 
 module.exports = {
   driver,
-  config,
+  config
 };
