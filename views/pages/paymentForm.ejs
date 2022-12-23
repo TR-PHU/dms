@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partitions/head.ejs") %>
+</head>
+<body>
+    <%- include("../partitions/navbar.ejs") %> 
+    <div class="container-sm mt-3">
+        <h1 class="display-6 mb-3 text-center"><%= headerTitle %></h1>
+        <form action=<%= action %> method=<%= method %>>
+            <% fields.forEach(field => { %>
+                <div class="mb-3">
+                    <label class="form-label" for=<%= field %> ><%= field %></label>
+                    <% if (datatypes[field].options) {%>
+                        <select name="<%= field %>" id=<%= field %> class="form-control">
+                            <% datatypes[field].options.forEach(option => { %>
+                                <% if (option.value == values[field]) { %>
+                                    <option selected value="<%= option.value %>"><%= option.text %></option>
+                                <% } else { %>
+                                    <option value="<%= option.value %>"><%= option.text %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    <% } else if(field == 'ID'){ %>
+                        <input id=<%= field %> readonly class="form-control" type=<%= datatypes[field] %> name=<%= field %> value="<%= values[field] %>">
+                    <% } else { %>
+                        <input id=<%= field %> class="form-control" type=<%= datatypes[field] %> name=<%= field %> value="<%= values[field] %>">
+                    <% } %>
+                </div>
+            <% }) %>
+            <table id="table" class="table table-hover table-borderless">
+                <tr>
+                    <th>Selected Car</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+                <% defaultCarSelection.forEach(carSelection => { %>
+                    <tr>
+                        <td>
+                            <select class="form-control" name="car-id-list">
+                                <% cars.forEach(car => { %>
+                                    <% if (car['ID']==carSelection['carid']) { %>
+                                        <option value="<%= car['ID'] %>" selected><%= car['NAME'] %></option>
+                                    <% } else { %>
+                                        <option value="<%= car['ID'] %>" ><%= car['NAME'] %></option>
+                                    <% } %>
+                                <% }) %>
+                            </select>
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" name="quantity-list" value="<%= carSelection['quantity'] %>" min="1" max="100">
+                        </td>
+                        <td class="col-md-1">
+                            <button type="button" onclick="SomeDeleteRowFunction(this)" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </table>
+            <button class="btn btn-sm btn-success" type="button" id="more-car">More car</button>
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+    <script>
+        function SomeDeleteRowFunction(e) {
+            e.parentElement.parentElement.remove();
+        }
+        const btn = document.getElementById('more-car');
+        btn.addEventListener('click', (e)=>{
+            const moreCar = `
+            <tr>
+                <td>
+                    <select class="form-control" name="car-id-list">
+                        <% cars.forEach(car => { %>
+                            <option value="<%= car['ID'] %>" ><%= car['NAME'] %></option>
+                        <% }) %>
+                    </select>
+                </td>
+                <td>
+                    <input class="form-control" type="number" name="quantity-list" value="1" min="1" max="100">
+                </td>
+                <td class="col-md-1">
+                    <button type="button" onclick="SomeDeleteRowFunction(this)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+            `;
+            document.getElementById("table").innerHTML += moreCar;
+        });
+    </script>
+</body>
+</html>

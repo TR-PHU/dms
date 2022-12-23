@@ -7,7 +7,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.EMPLOYEE WHERE "ID" = '${req.params.id}'`
+        `SELECT * FROM EMPLOYEE WHERE "ID" = '${req.params.id}'`
       );
       const rows = await results.getRows();
       rows[0].DOB = moment(rows[0].DOB).format("YYYY-MM-DD");
@@ -24,7 +24,7 @@ module.exports = {
   index: async (req, res, next) => {
     try {
       const connection = await driver.connect(config);
-      const results = await connection.execute(`SELECT * FROM HOCKEY.EMPLOYEE`);
+      const results = await connection.execute(`SELECT * FROM EMPLOYEE`);
       const rows = await results.getRows();
       rows.forEach((row) => {
         row.DOB = moment(row.DOB).format("DD/MM/YYYY");
@@ -70,7 +70,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.EMPLOYEE WHERE "USERNAME" = '${username}'`
+        `SELECT * FROM EMPLOYEE WHERE "USERNAME" = '${username}'`
       );
       const rows = await results.getRows();
 
@@ -81,7 +81,7 @@ module.exports = {
       const uuid = uuidv4().split("-")[0];
       dateOfBirth = moment(dateOfBirth, "DD/MM/YYYY").format("YYYY-MM-DD");
       await connection.execute(
-        `INSERT INTO HOCKEY.EMPLOYEE("ID","NAME", "USERNAME", "PASSWORD" ,"GENDER", "DOB","ADDRESS" ,"PHONE", "SALARY") VALUES ('${uuid}', '${name}', '${username}', '${password}','${gender}', '${dateOfBirth}', '${address}' ,'${phone}', '${salary}')`
+        `INSERT INTO EMPLOYEE("ID","NAME", "USERNAME", "PASSWORD" ,"GENDER", "DOB","ADDRESS" ,"PHONE", "SALARY") VALUES ('${uuid}', '${name}', '${username}', '${password}','${gender}', '${dateOfBirth}', '${address}' ,'${phone}', '${salary}')`
       );
 
       return res.redirect("/employee");
@@ -96,7 +96,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.EMPLOYEE WHERE "ID" = '${id}'`
+        `SELECT * FROM EMPLOYEE WHERE "ID" = '${id}'`
       );
       const rows = await results.getRows();
 
@@ -106,7 +106,7 @@ module.exports = {
 
       dateOfBirth = moment(dateOfBirth).format("YYYY-MM-DD");
       await connection.execute(
-        `UPDATE HOCKEY.EMPLOYEE SET "NAME" = '${name}', "GENDER" = '${gender}', "DOB" = '${dateOfBirth}', "PHONE" = '${phone}', "ADDRESS" = '${address}', "USERNAME" = '${username}', "SALARY" = '${salary}' WHERE "ID" = '${id}'`
+        `UPDATE EMPLOYEE SET "NAME" = '${name}', "GENDER" = '${gender}', "DOB" = '${dateOfBirth}', "PHONE" = '${phone}', "ADDRESS" = '${address}', "USERNAME" = '${username}', "SALARY" = '${salary}' WHERE "ID" = '${id}'`
       );
       return res.redirect("/employee");
     } catch (error) {
@@ -118,7 +118,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.EMPLOYEE WHERE "ID" = '${id}'`
+        `SELECT * FROM EMPLOYEE WHERE "ID" = '${id}'`
       );
       const rows = await results.getRows();
 
@@ -127,7 +127,7 @@ module.exports = {
       }
 
       await connection.execute(
-        `DELETE FROM HOCKEY.EMPLOYEE WHERE "ID" = '${id}'`
+        `DELETE FROM EMPLOYEE WHERE "ID" = '${id}'`
       );
       return res.redirect("/employee");
     } catch (error) {

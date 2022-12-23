@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partitions/head.ejs") %>
+</head>
+<body>
+    <%- include("../partitions/navbar.ejs") %> 
+    <div class="container-sm mt-3 col-md-8">
+        <h1 class="display-6 mb-3 text-center"><%= headerTitle %></h1>
+        <form action=<%= action %> method=<%= method %>>
+            <% fields.forEach(field => { %>
+                <div class="mb-3">
+                    <label class="form-label" for=<%= field %> ><%= field %></label>
+                    <% if (datatypes[field].options) {%>
+                        <select name="<%= field %>" id=<%= field %> class="form-control">
+                            <% datatypes[field].options.forEach(option => { %>
+                                <% if (option.value == values[field]) { %>
+                                    <option selected value="<%= option.value %>"><%= option.text %></option>
+                                <% } else { %>
+                                    <option value="<%= option.value %>"><%= option.text %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    <% } else if(field != 'ID' || (typeof editId !== 'undefined' && editId==true)){ %>
+                        <input id=<%= field %> class="form-control" type=<%= datatypes[field] %> name=<%= field %> value="<%= values[field] %>">
+                    <% } else { %>
+                        <input id=<%= field %> readonly class="form-control" type=<%= datatypes[field] %> name=<%= field %> value="<%= values[field] %>">
+                    <% } %>
+                </div>
+            <% }) %>
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

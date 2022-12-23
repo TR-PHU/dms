@@ -15,7 +15,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.EMPLOYEE 
+        `SELECT * FROM EMPLOYEE 
         WHERE USERNAME = '${username}' AND PASSWORD = '${password}'`
       );
       const rows = await results.getRows();

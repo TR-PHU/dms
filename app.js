@@ -7,6 +7,10 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const carsRouter = require('./routes/cars');
+const carImportsRouter = require('./routes/carImports');
+const paymentsRouter = require('./routes/payments');
+const paymentDetailsRouter = require('./routes/paymentDetails');
 const flash = require("connect-flash");
 const session = require("express-session");
 const { driver, config } = require("./models/connectDB");
@@ -37,6 +41,10 @@ app.use(flash());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use('/cars', carsRouter);
+app.use('/car-imports', carImportsRouter);
+app.use('/payments', paymentsRouter);
+app.use('/payment-details', paymentDetailsRouter);
 
 app.use(function (req, res, next) {
   res.locals.user = req.session.user;

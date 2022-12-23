@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partitions/head.ejs") %>
+</head>
+<body>
+    <%- include("../partitions/navbar.ejs") %> 
+    <div class="container-sm mt-3 col-md-6">
+        <h1 class="display-6 text-center mb-3"><%= headerTitle %></h1>
+        <div class="text-end mb-3">
+            <a href=<%= `/car-imports/create` %> class="btn btn-info">Add</a>
+        </div>
+        <table class="table table-striped table-hover">
+            <tr>
+                <% fields.forEach(field => { %>
+                    <th><%= field %> </th>
+                <% }) %>
+                <th>Features</th>
+            </tr>
+            <% rows.forEach(row => { %>
+                <tr>
+                    <% fields.forEach(field => { %>
+                        <td>
+                            <%= row[field] %> 
+                        </td>
+                    <% }) %>
+                    <td class="col-md-2">
+                        <div class="d-flex">
+                            <a href=<%= `/car-imports/update?carid=${row['CARID']}&importdate=${row['IMPORTDATE']}` %> class="btn btn-warning">Update</a>
+                            <form method="post" action=<%= `/car-imports/delete` %> >
+                                <input name="carid" value="<%= row['CARID'] %>" type="hidden" >
+                                <input name="importdate" value="<%= row['IMPORTDATE'] %>" type="hidden" >
+                                <input class="btn btn-danger" type="submit" value="Delete">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
+</body>
+</html>
