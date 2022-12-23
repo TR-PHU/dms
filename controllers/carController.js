@@ -76,7 +76,7 @@ const updateView = async (req, res, next)=>{
     const {id} = req.params;
     try{
         const conn = await driver.connect(config);
-        const result = await conn.execute(`SELECT * FROM CAR WHERE ID=${id}`);
+        const result = await conn.execute(`SELECT * FROM CAR WHERE ID='${id}'`);
         const rows = await result.getRows();
         const values = rows[0];
         const datatypes = {
@@ -117,7 +117,7 @@ const update = async (req, res, next)=>{
                 statement += i != len ? ', ' : ' ';
             }
         });
-        statement += `WHERE ID=${body['ID']};`;
+        statement += `WHERE ID='${body['ID']}';`;
 
         await conn.execute(statement);
 
@@ -133,7 +133,7 @@ const remove = async (req, res, next)=>{
     console.log(id);
     try{
         const conn = await driver.connect(config);
-        await conn.execute(`DELETE FROM CAR WHERE ID=${id}`);
+        await conn.execute(`DELETE FROM CAR WHERE ID='${id}'`);
         return res.redirect('/cars');
     }
     catch(e){

@@ -5,7 +5,7 @@
 </head>
 <body>
     <%- include("../partitions/navbar.ejs") %> 
-    <div class="container-sm mt-3">
+    <div class="container-sm mt-3 col-md-6">
         <h1 class="display-6 text-center mb-3"><%= headerTitle %></h1>
         <div class="text-end mb-3">
             <a href=<%= `/car-imports/create` %> class="btn btn-info">Add</a>
@@ -24,13 +24,15 @@
                             <%= row[field] %> 
                         </td>
                     <% }) %>
-                    <td class="d-flex">
-                        <a href=<%= `/car-imports/update?carid=${row['CARID']}&&importdate=${new Date(row['IMPORTDATE']).getTime()}` %> class="btn btn-warning">Update</a>
-                        <form method="post" action=<%= `/car-imports/delete` %> >
-                            <input name="carid" value="<%= row['CARID'] %>" type="hidden" >
-                            <input name="importdate" value="<%= row['IMPORTDATE'] %>" type="hidden" >
-                            <input class="btn btn-danger" type="submit" value="Delete">
-                        </form>
+                    <td class="col-md-2">
+                        <div class="d-flex">
+                            <a href=<%= `/car-imports/update?carid=${row['CARID']}&importdate=${row['IMPORTDATE']}` %> class="btn btn-warning">Update</a>
+                            <form method="post" action=<%= `/car-imports/delete` %> >
+                                <input name="carid" value="<%= row['CARID'] %>" type="hidden" >
+                                <input name="importdate" value="<%= row['IMPORTDATE'] %>" type="hidden" >
+                                <input class="btn btn-danger" type="submit" value="Delete">
+                            </form>
+                        </div>
                     </td>
                 </tr>
             <% }) %>

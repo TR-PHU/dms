@@ -5,7 +5,7 @@
 </head>
 <body>
     <%- include("../partitions/navbar.ejs") %> 
-    <div class="container-sm mt-3 col-md-8">
+    <div class="container-sm mt-3 col-md-6">
         <h1 class="display-6 text-center mb-3"><%= headerTitle %></h1>
         <div class="text-end mb-3">
             <a href=<%= `/${router}/create` %> class="btn btn-info">Add</a>
@@ -26,9 +26,10 @@
                     <% }) %>
                     <td class="col-md-2">
                         <div class="d-flex">
-                            <a href=<%= `/${router}/${row['ID']}/update` %> class="btn btn-warning">Update</a>
-                            <form method="post" action=<%= `/${router}/${row['ID']}/delete` %> >
-                                <input name="id" value="<%= row['ID'] %>" type="hidden" >
+                            <a href=<%= `/payment-details/update?carid=${row['CARID']}&paymentid=${row['PAYMENTID']}` %> class="btn btn-warning">Update</a>
+                            <form method="post" action=<%= `/payment-details/delete` %> >
+                                <input name="carid" value="<%= row['CARID'] %>" type="hidden" >
+                                <input name="paymentid" value="<%= row['PAYMENTID'] %>" type="hidden" >
                                 <input class="btn btn-danger" type="submit" value="Delete">
                             </form>
                         </div>

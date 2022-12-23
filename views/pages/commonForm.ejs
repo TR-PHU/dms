@@ -5,17 +5,16 @@
 </head>
 <body>
     <%- include("../partitions/navbar.ejs") %> 
-    <div class="container-sm mt-3">
+    <div class="container-sm mt-3 col-md-8">
         <h1 class="display-6 mb-3 text-center"><%= headerTitle %></h1>
         <form action=<%= action %> method=<%= method %>>
             <% fields.forEach(field => { %>
-                <% console.log(values[field]) %>
                 <div class="mb-3">
                     <label class="form-label" for=<%= field %> ><%= field %></label>
                     <% if (datatypes[field].options) {%>
                         <select name="<%= field %>" id=<%= field %> class="form-control">
                             <% datatypes[field].options.forEach(option => { %>
-                                <% if (option == values[field]) { %>
+                                <% if (option.value == values[field]) { %>
                                     <option selected value="<%= option.value %>"><%= option.text %></option>
                                 <% } else { %>
                                     <option value="<%= option.value %>"><%= option.text %></option>

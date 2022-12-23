@@ -7,7 +7,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.CUSTOMER WHERE "ID" = '${req.params.id}'`
+        `SELECT * FROM CUSTOMER WHERE "ID" = '${req.params.id}'`
       );
       const rows = await results.getRows();
       rows[0].DOB = moment(rows[0].DOB).format("YYYY-MM-DD");
@@ -23,7 +23,7 @@ module.exports = {
   index: async (req, res, next) => {
     try {
       const connection = await driver.connect(config);
-      const results = await connection.execute(`SELECT * FROM HOCKEY.CUSTOMER`);
+      const results = await connection.execute(`SELECT * FROM CUSTOMER`);
       const rows = await results.getRows();
       rows.forEach((row) => {
         row.DOB = moment(row.DOB).format("DD/MM/YYYY");
@@ -49,7 +49,7 @@ module.exports = {
       const uuid = uuidv4().split("-")[0];
       dateOfBirth = moment(dateOfBirth, "DD/MM/YYYY").format("YYYY-MM-DD");
       await connection.execute(
-        `INSERT INTO HOCKEY.CUSTOMER("ID","NAME", "GENDER", "DOB", "PHONE", "ADDRESS") VALUES ('${uuid}', '${name}', '${gender}', '${dateOfBirth}', '${phone}', '${address}')`
+        `INSERT INTO CUSTOMER("ID","NAME", "GENDER", "DOB", "PHONE", "ADDRESS") VALUES ('${uuid}', '${name}', '${gender}', '${dateOfBirth}', '${phone}', '${address}')`
       );
 
       return res.redirect("/customer");
@@ -63,7 +63,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.CUSTOMER WHERE "ID" = '${id}'`
+        `SELECT * FROM CUSTOMER WHERE "ID" = '${id}'`
       );
       const rows = await results.getRows();
 
@@ -73,7 +73,7 @@ module.exports = {
 
       dateOfBirth = moment(dateOfBirth).format("YYYY-MM-DD");
       await connection.execute(
-        `UPDATE HOCKEY.CUSTOMER SET "NAME" = '${name}', "GENDER" = '${gender}', "DOB" = '${dateOfBirth}', "PHONE" = '${phone}', "ADDRESS" = '${address}' WHERE "ID" = '${id}'`
+        `UPDATE CUSTOMER SET "NAME" = '${name}', "GENDER" = '${gender}', "DOB" = '${dateOfBirth}', "PHONE" = '${phone}', "ADDRESS" = '${address}' WHERE "ID" = '${id}'`
       );
       return res.redirect("/customer");
     } catch (error) {
@@ -85,7 +85,7 @@ module.exports = {
     try {
       const connection = await driver.connect(config);
       const results = await connection.execute(
-        `SELECT * FROM HOCKEY.CUSTOMER WHERE "ID" = '${id}'`
+        `SELECT * FROM CUSTOMER WHERE "ID" = '${id}'`
       );
       const rows = await results.getRows();
 
@@ -94,7 +94,7 @@ module.exports = {
       }
 
       await connection.execute(
-        `DELETE FROM HOCKEY.CUSTOMER WHERE "ID" = '${id}'`
+        `DELETE FROM CUSTOMER WHERE "ID" = '${id}'`
       );
       return res.redirect("/customer");
     } catch (error) {
